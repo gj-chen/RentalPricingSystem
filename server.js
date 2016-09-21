@@ -27,6 +27,7 @@ router.use(function(req, res, next){
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+
 //Calculations
 var pricePerSqftArray0 = []; 
 var pricePerSqftArray1 = []; 
@@ -182,9 +183,6 @@ router.post('/getVariablesAndCalculate', function(req, res, next){
 	
 }); 
 
-router.get('/getVariablesAndCalculate', function(req, res, next){
-	res.json(rentalCost);
-});
 
 //app.get 
 app.get('/', router);
