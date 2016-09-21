@@ -117,10 +117,6 @@ function sortAndGetMedians(){
 	pricePerSqftArray5.sort(); 
 	pricePerSqftArrayMore.sort(); 
 
-	var total = parseInt(pricePerSqftArray0.length) + parseInt(pricePerSqftArray1.length) + parseInt(pricePerSqftArray2.length)
-		+ parseInt(pricePerSqftArray3.length) + parseInt(pricePerSqftArray4.length) + parseInt(pricePerSqftArray5.length) + parseInt(pricePerSqftArrayMore.length);
-	console.log('length total: ' + total);
-
 	medianPricePerSqft0 = median(pricePerSqftArray0);
 	medianPricePerSqft1 = median(pricePerSqftArray1);
 	medianPricePerSqft2 = median(pricePerSqftArray2);
@@ -129,7 +125,13 @@ function sortAndGetMedians(){
 	medianPricePerSqft5 = median(pricePerSqftArray5);
 	medianPricePerSqftMore = median(pricePerSqftArrayMore);
 
-	console.log(medianPricePerSqft1);
+	console.log('0 ' + medianPricePerSqft0);
+	console.log('1 ' + medianPricePerSqft1);
+	console.log('2 ' + medianPricePerSqft2);
+	console.log('3 ' + medianPricePerSqft3);
+	console.log('4 ' + medianPricePerSqft4);
+	console.log('5 ' + medianPricePerSqft5);
+	console.log('More ' + medianPricePerSqftMore);
 }
 
 sortAndGetMedians();
