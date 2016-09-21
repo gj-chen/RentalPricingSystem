@@ -6,6 +6,8 @@ var express = require('express');
 	fs = require('fs'); 
 	byline = require('byline'); 
 	bodyParser = require('body-parser');
+	ejs = require('ejs');
+
 
 //Create an Express application 
 var app = express(); 
@@ -138,7 +140,6 @@ sortAndGetMedians();
 //now that we have our standard (medians) to use for calculations, get calculations from user to calculate
 var rentalCost = 0; 
 function calculatePricePerSqft(numBedrooms, sqft){
-	console.log('goes inside?');
 	if(numBedrooms == 0){
 		//calculate total cost = price_per_sqft * sqft of house 
 		rentalCost = medianPricePerSqft0 * parseInt(sqft); 
@@ -166,8 +167,7 @@ router.get('/', function(req, res, next){
 });
 
 //pass in variables 
-router.get('/getVariablesAndCalculate', function(req, res, next){
-	//get variables and parse json 
+router.post('/getVariablesAndCalculate', function(req, res, next){
 	var houseName = JSON.parse(req.param('houseName'));
 	var numBedrooms = JSON.parse(req.param('numBedrooms'));
 	var numBathrooms = JSON.parse(req.param('numBathrooms')); 
@@ -177,16 +177,17 @@ router.get('/getVariablesAndCalculate', function(req, res, next){
 	calculatePricePerSqft(numBedrooms, sqft); 
 	//rental cost is now calculated 
 	console.log(rentalCost); 
+
+	//res.json(rentalCost);
+	
 }); 
 
-//rental cost is calculated - need to send back to front end to populate front end 
-//send it back as a post 
-router.post('/getVariablesAndCalculate', function(req, res, next){
-	//send back rental cost here 
-}); 
+router.get('/getVariablesAndCalculate', function(req, res, next){
+	res.json(rentalCost);
+});
 
 //app.get 
-app.get('/', router); 
-app.get('/getVariablesAndCalculate', router);
-app.post('/getVariablesAndCalculate', router);  
-
+app.get('/', router);
+app.post('/getVariablesAndCalculate', router); 
+app.get('/getVariablesAndCalculate', router); 
+//app.get('/getVariablesAndCalculate', router);
