@@ -20,11 +20,7 @@ router.use(function(req, res, next){
 	next(); 
 });
 
-//Router paths 
-router.get('/', function(req, res, next){
-	console.log('hi gloria'); 
-});
-
+//Calculations
 var pricePerSqftArray0 = []; 
 var pricePerSqftArray1 = []; 
 var pricePerSqftArray2 = []; 
@@ -102,8 +98,6 @@ function parseCSV(){
 	}	
 }
 
-parseCSV();
-
 function sortAndGetMedians(){
 	//so far we have all of the roomsizes and price per sqfts 
 	//need to get the median of each to use as the standard 
@@ -134,10 +128,18 @@ function sortAndGetMedians(){
 	console.log('More ' + medianPricePerSqftMore);
 }
 
+parseCSV(); 
 sortAndGetMedians();
 
 //now that we have our standard (medians) to use for calculations, get calculations from user to calculate 
 
+
+
+
+//Router paths 
+router.get('/', function(req, res, next){
+	res.sendFile(path.join(__dirname + '/index.html')); 
+});
 
 //app.get 
 app.get('/', router); 

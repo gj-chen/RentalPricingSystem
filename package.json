@@ -16,6 +16,7 @@
     "node": "~5.8.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "byline": "^5.0.0",
     "csv": "^1.1.0",
     "express": "^4.13.4",
