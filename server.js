@@ -57,12 +57,32 @@ function calculateRoomValues(){
 
 calculateRoomValues();
 
-function findMedians(){
-	
+var sqftPerRoomMedian = 0;
+var pricePerSqftMedian = 0; 
+var pricePerRoomMedian = 0; 
+
+function median(values){
+	var half = Math.floor(values.length/2);
+
+    if(values.length % 2)
+        return values[half];
+    else
+        return (values[half-1] + values[half]) / 2.0;
 }
 
+function findMedians(){
+	sqftPerRoomArray.sort(); 
+	pricePerSqftArray.sort(); 
+	pricePerRoomArray.sort(); 
 
- 
+	sqftPerRoomMedian = median(sqftPerRoomArray); 
+	pricePerSqftMedian = median(pricePerSqftArray); 
+	pricePerRoomMedian = median(pricePerRoomArray); 
+}
+
+findMedians(); 
+
+
 
 
 //app.get 
