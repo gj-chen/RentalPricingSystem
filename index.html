@@ -8,21 +8,68 @@
     <title>Rental Pricing System</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      $(function(){
+      // Intercept form submission and submit the form with ajax
+        $('#sendVariables').on('submit', function(e) {
+        // Prevent submit event from bubbling and automatically submitting the form
+          e.preventDefault();
+          // Call our ajax endpoint on the server to initialize the phone call
+          $.ajax({
+            url: '/getVariablesAndCalculate',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+              houseName: $('#houseName').val()
+              numBedrooms: $('#numBedrooms').val()
+              numBathrooms: $('#numBathrooms').val()
+              sqft: $('#sqft').val() 
+            }
+            success: function(data) {
+              console.log('successfully called');
+            },
+            error : function() {
+              console.log('error');
+            }
+          })
+        });
+      });
+    </script>
+    
   </head>
   <body>
-    <div class="container-fluid">
-      <h1 class = "title">How much should I charge for rent?</h1>
     
-      <form>
-        
+
+    <div class="container-fluid">
+      <h1 class = "title text-center">Rental Pricing System</h1>
+      <p class ="description text-center">Calculate how much you should charge for rent</p>
+    
+      <form id = 'sendVariables' action = "/getVariablesAndCalculate" action ="POST">
+        <input type="text" name="houseName" placeholder="House Name" required>
+        <input type="text" name="numBedrooms" placeholder="Number of Bedrooms" required>
+        <input type="text" name="numBathrooms" placeholder="Number of Bathrooms" required>
+        <input type="text" name="sqft" placeholder="Square Footage" required>
+        <button class="btn btn-primary" type="submit">Calculate Rent</button>
       </form>
+
+
     </div>
 
 
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    
+   
   </body>
 </html>

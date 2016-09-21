@@ -5,6 +5,7 @@ var express = require('express');
 	url = require('url'); 
 	fs = require('fs'); 
 	byline = require('byline'); 
+	bodyParser = require('body-parser');
 
 //Create an Express application 
 var app = express(); 
@@ -19,6 +20,10 @@ router.use(function(req, res, next){
 	console.log(req.method, req.url); 
 	next(); 
 });
+
+//Uses bodyParser to support JSON encoded bodies 
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 //Calculations
 var pricePerSqftArray0 = []; 
@@ -130,17 +135,58 @@ function sortAndGetMedians(){
 
 parseCSV(); 
 sortAndGetMedians();
-
-//now that we have our standard (medians) to use for calculations, get calculations from user to calculate 
-
-
+//now that we have our standard (medians) to use for calculations, get calculations from user to calculate
+var rentalCost = 0; 
+function calculatePricePerSqft(numBedrooms, sqft){
+	console.log('goes inside?');
+	if(numBedrooms == 0){
+		//calculate total cost = price_per_sqft * sqft of house 
+		rentalCost = medianPricePerSqft0 * parseInt(sqft); 
+	}else if(numBedrooms == 1){
+		rentalCost = medianPricePerSqft1 * parseInt(sqft);
+	}else if(numBedrooms == 2){
+		rentalCost = medianPricePerSqft2 * parseInt(sqft);
+	}else if(numBedrooms == 3){
+		rentalCost = medianPricePerSqft3 * parseInt(sqft);
+	}else if(numBedrooms == 4){
+		rentalCost = medianPricePerSqft4 * parseInt(sqft);
+	}else if(numBedrooms == 5){
+		rentalCost = medianPricePerSqft5 * parseInt(sqft);
+	}else{
+		//more than 5 bedrooms 
+		rentalCost = medianPricePerSqftMore * parseInt(sqft);
+	}
+}
 
 
 //Router paths 
+//first page 
 router.get('/', function(req, res, next){
 	res.sendFile(path.join(__dirname + '/index.html')); 
 });
 
+//pass in variables 
+router.get('/getVariablesAndCalculate', function(req, res, next){
+	//get variables and parse json 
+	var houseName = JSON.parse(req.param('houseName'));
+	var numBedrooms = JSON.parse(req.param('numBedrooms'));
+	var numBathrooms = JSON.parse(req.param('numBathrooms')); 
+	var sqft = JSON.parse(req.param('sqft')); 
+	
+	//check what the bedroom size is to determine price per sqft 
+	calculatePricePerSqft(numBedrooms, sqft); 
+	//rental cost is now calculated 
+	console.log(rentalCost); 
+}); 
+
+//rental cost is calculated - need to send back to front end to populate front end 
+//send it back as a post 
+router.post('/getVariablesAndCalculate', function(req, res, next){
+	//send back rental cost here 
+}); 
+
 //app.get 
 app.get('/', router); 
+app.get('/getVariablesAndCalculate', router);
+app.post('/getVariablesAndCalculate', router);  
 
