@@ -42,11 +42,11 @@
      
       </div>
  
-      <h3 ng-bind="rentalCost">The calculated rent price is: {{ rentalCost }}</h3>
+      <h3>The calculated rent price is: $<span ng-bind = "rentalCost">{{ rentalCost }}</span></h3>
+      <h3>
     </div>
 
     <script>
-    //put script here
     var rentalSystem = angular.module("rentalSystem", []);
     console.log('angular', angular)
     rentalSystem.controller('mainController', function($scope, $http){
