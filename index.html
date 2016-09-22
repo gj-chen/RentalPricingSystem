@@ -22,26 +22,30 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    
     <script>
     //put script here
     var rentalSystem = angular.module("rentalSystem", []); 
     rentalSystem.controller('mainController', function($scope, $http){
-      $scope.houseName = ''; 
-      $scope.numBedrooms = '';
-      $scope.numBathrooms = ''; 
-      $scope.sqft = ''; 
+      console.log("here?");
+      $scope.calculateRent() = function(item, event){
+        console.log('submitting form....');
+        var dataObject = {
+          houseName: $scope.houseName,
+          numBedrooms: $scope.numBedrooms, 
+          numBathrooms: $scope.numBathrooms, 
+          sqft: $scope.sqft; 
+        }; 
 
-      $scope.getCall = function(){
-        $http({
-          method: 'GET',
-          url: '/getVariablesAndCalculate'
-        }).then(function successCallBack(data){
-          $scope.rentalCost = data;
-          console.log('the rental cost is: ' + data); 
-        }, function errorCallBack(data){
-            console.log('An error has occurred during return'); 
+        var response = $http.get("/getVariablesAndCalculate", dataObject, {}); 
+        response.success(function(dataFromServer){
+          $scope.rentalCost = dataFromServer; 
+          console.log('success');
         });
-      };  
+        response.error(function(dataFromServer){
+          console.log('error');
+        });
+      };
     }); 
     </script>
 
@@ -51,17 +55,20 @@
     <div class="container-fluid">
       <h1 class = "title text-center">Rental Pricing System</h1>
       <p class ="description text-center">Calculate how much you should charge for rent</p>
-    
-      <form id = 'sendVariables'>
-        <input type="text" name="houseName" placeholder="House Name" required ng-model = "houseName">
+      
+      <form>
+        <input type="text" name="houseName" placeholder="House Name" required ng-model ="houseName">
         <input type="text" name="numBedrooms" placeholder="Number of Bedrooms" required ng-model = "numBedrooms">
         <input type="text" name="numBathrooms" placeholder="Number of Bathrooms" required ng-model= "numBathrooms">
         <input type="text" name="sqft" placeholder="Square Footage" required ng-model="sqft">
-        <button class="btn btn-primary" id ="button" type="submit" ng-click="getCall()">Calculate Rent</button>
-      </form>
+
+        <button class="btn btn-primary" ng-click="calculateRent()">Calculate Rent</button>
+      </form>  
+
+   
     </div>
 
-    <h3>The calculated rent price is: {{ rentalCost }} {{houseName}}</h3> 
+    <h3 ng-bind="rentalCost">The calculated rent price is: {{ rentalCost }} {{houseName}}</h3> 
  
   </body>
 </html>
