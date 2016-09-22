@@ -7,6 +7,7 @@ var express = require('express');
 	byline = require('byline'); 
 	bodyParser = require('body-parser');
 	ejs = require('ejs');
+	math = require('mathjs');
 
 
 //Create an Express application 
@@ -106,22 +107,7 @@ function checkRoomSizeAndCalculate(price, numBedrooms, numBathrooms, sqft){
 	}
 }
 
-function median(values){
-	var half = Math.floor(values.length/2);
-
-    if(values.length % 2)
-        return values[half];
-    else
-        return (values[half-1] + values[half]) / 2.0;
-}
-
-function mean(values){
-	var sum = 0;
-	for( var i = 0; i < values.length; i++ ){
-    	sum += parseInt(values[i], 10); 
-    }
-    return sum/values.length;
-}
+console.log('sqftByRoomSizeArrayMore all: '+ sqftByRoomSizeArrayMore); 
 
 var medianPricePerSqft0 = 0; 
 var medianPricePerSqft1 = 0; 
@@ -205,15 +191,15 @@ function sortAndGetMedianMeanMinMax(){
 	pricePerSqftArray3.sort(function(a, b){return a-b}); 
 	pricePerSqftArray4.sort(function(a, b){return a-b});
 	pricePerSqftArray5.sort(function(a, b){return a-b}); 
-	pricePerSqftArrayMore.sort(function(a, b){return a-b}); 
+	pricePerSqftArrayMore.sort(function(a, b){return a-b});
 
-	medianPricePerSqft0 = median(pricePerSqftArray0);
-	medianPricePerSqft1 = median(pricePerSqftArray1);
-	medianPricePerSqft2 = median(pricePerSqftArray2);
-	medianPricePerSqft3 = median(pricePerSqftArray3);
-	medianPricePerSqft4 = median(pricePerSqftArray4);
-	medianPricePerSqft5 = median(pricePerSqftArray5);
-	medianPricePerSqftMore = median(pricePerSqftArrayMore);
+	medianPricePerSqft0 = math.median(pricePerSqftArray0);
+	medianPricePerSqft1 = math.median(pricePerSqftArray1);
+	medianPricePerSqft2 = math.median(pricePerSqftArray2);
+	medianPricePerSqft3 = math.median(pricePerSqftArray3);
+	medianPricePerSqft4 = math.median(pricePerSqftArray4);
+	medianPricePerSqft5 = math.median(pricePerSqftArray5);
+	medianPricePerSqftMore = math.median(pricePerSqftArrayMore);
 
 	console.log('0 ' + medianPricePerSqft0);
 	console.log('1 ' + medianPricePerSqft1);
@@ -232,22 +218,22 @@ function sortAndGetMedianMeanMinMax(){
 	priceByRoomSizeArray5.sort(function(a, b){return a-b}); 
 	priceByRoomSizeArrayMore.sort(function(a, b){return a-b}); 
 
-	medianPriceByRoomSize0 = median(priceByRoomSizeArray0); 
-	medianPriceByRoomSize1 = median(priceByRoomSizeArray1);
-	medianPriceByRoomSize2 = median(priceByRoomSizeArray2);
-	medianPriceByRoomSize3 = median(priceByRoomSizeArray3);
-	medianPriceByRoomSize4 = median(priceByRoomSizeArray4);
-	medianPriceByRoomSize5 = median(priceByRoomSizeArray5);
-	medianPriceByRoomSizeMore = median(priceByRoomSizeArrayMore);
+	medianPriceByRoomSize0 = math.median(priceByRoomSizeArray0); 
+	medianPriceByRoomSize1 = math.median(priceByRoomSizeArray1);
+	medianPriceByRoomSize2 = math.median(priceByRoomSizeArray2);
+	medianPriceByRoomSize3 = math.median(priceByRoomSizeArray3);
+	medianPriceByRoomSize4 = math.median(priceByRoomSizeArray4);
+	medianPriceByRoomSize5 = math.median(priceByRoomSizeArray5);
+	medianPriceByRoomSizeMore = math.median(priceByRoomSizeArrayMore);
 
 	//Average by Price of # Bedrooms
-	meanPriceByRoomSize0 = mean(priceByRoomSizeArray0); 
-	meanPriceByRoomSize1 = mean(priceByRoomSizeArray1);
-	meanPriceByRoomSize2 = mean(priceByRoomSizeArray2);
-	meanPriceByRoomSize3 = mean(priceByRoomSizeArray3);
-	meanPriceByRoomSize4 = mean(priceByRoomSizeArray4);
-	meanPriceByRoomSize5 = mean(priceByRoomSizeArray5);
-	meanPriceByRoomSizeMore = mean(priceByRoomSizeArrayMore);
+	meanPriceByRoomSize0 = math.mean(priceByRoomSizeArray0); 
+	meanPriceByRoomSize1 = math.mean(priceByRoomSizeArray1);
+	meanPriceByRoomSize2 = math.mean(priceByRoomSizeArray2);
+	meanPriceByRoomSize3 = math.mean(priceByRoomSizeArray3);
+	meanPriceByRoomSize4 = math.mean(priceByRoomSizeArray4);
+	meanPriceByRoomSize5 = math.mean(priceByRoomSizeArray5);
+	meanPriceByRoomSizeMore = math.mean(priceByRoomSizeArrayMore);
 
 	minPriceByRoomSize0 = priceByRoomSizeArray0[0]; 
 	minPriceByRoomSize1 = priceByRoomSizeArray1[0];
@@ -273,14 +259,19 @@ function sortAndGetMedianMeanMinMax(){
 	sqftByRoomSizeArray4.sort(function(a, b){return a-b});
 	sqftByRoomSizeArray5.sort(function(a, b){return a-b});
 	sqftByRoomSizeArrayMore.sort(function(a, b){return a-b});
+	console.log('after sorting' + sqftByRoomSizeArrayMore);
 	//get medians 
-	medianSqftByRoomSize0 = median(sqftByRoomSizeArray0);
-	medianSqftByRoomSize1 = median(sqftByRoomSizeArray1);
-	medianSqftByRoomSize2 = median(sqftByRoomSizeArray2);
-	medianSqftByRoomSize3 = median(sqftByRoomSizeArray3);
-	medianSqftByRoomSize4 = median(sqftByRoomSizeArray4);
-	medianSqftByRoomSize5 = median(sqftByRoomSizeArray5);
-	medianSqftByRoomSizeMore = median(sqftByRoomSizeArrayMore);
+
+	console.log('median sqft by room size more' + sqftByRoomSizeArrayMore); 
+	medianSqftByRoomSize0 = math.median(sqftByRoomSizeArray0);
+	medianSqftByRoomSize1 = math.median(sqftByRoomSizeArray1);
+	medianSqftByRoomSize2 = math.median(sqftByRoomSizeArray2);
+	medianSqftByRoomSize3 = math.median(sqftByRoomSizeArray3);
+	medianSqftByRoomSize4 = math.median(sqftByRoomSizeArray4);
+	medianSqftByRoomSize5 = math.median(sqftByRoomSizeArray5);
+	console.log('before sort:' + medianSqftByRoomSize5);
+	medianSqftByRoomSizeMore = math.median(sqftByRoomSizeArrayMore);
+	console.log('median sq ft by room size more:' + medianSqftByRoomSizeMore); 
 
 }
 

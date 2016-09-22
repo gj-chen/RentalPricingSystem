@@ -35,7 +35,7 @@
         <form ng-submit= "calculateRent()" class='text-center'>
           <input class = 'text-center' type="text" name="numBedrooms" placeholder="Number of Bedrooms" required ng-model = "numBedrooms">
           <input class = 'text-center' type="text" name="numBathrooms" placeholder="Number of Bathrooms" required ng-model= "numBathrooms">
-          <input class = 'text-center' type="text" name="sqft" placeholder="Square Footage" required ng-model="sqft">
+          <input class = 'text-center' type="text" name="sqft" placeholder="Size" required ng-model="sqft">
  
           <button type = "submit" class="btn btn-primary">Calculate Rent</button>
         </form>  
@@ -77,7 +77,7 @@
           //parse dataFromServer into different scope variables 
           var variableArray = dataFromServer.split(','); 
  
-          var calculatedRentalCost = 'You should charge $'+parseFloat(variableArray[0]).toFixed(2)+ ' for rent in your '; 
+          var calculatedRentalCost = 'You should charge $'+parseFloat(variableArray[0]).toFixed(2)+ ' for rent at your '; 
           var calculatedNumBedrooms = variableArray[1]+ 'Bed/'; 
           var calculatedNumBathrooms = variableArray[2] + 'Bath house'; 
           var calculatedSqft = variableArray[3] +' sqft ';
@@ -98,11 +98,11 @@
           $scope.newNumBedrooms = calculatedNumBedrooms; 
           $scope.newNumBathrooms = calculatedNumBathrooms;             
           $scope.newSqft = calculatedSqft; 
-          $scope.comparison = "In comparison to similar houses: "
+          $scope.comparison = "In comparison to similar rentals: "
           $scope.medianPriceOfHousesWithSameBedrooms = calculatedMedianPriceOfHousesWithSameBedrooms;
            
           $scope.averagePriceOfHousesWithSameBedrooms = calculatedAveragePriceOfHousesWithSameBedrooms; 
-          $scope.rangePriceOfHousesWithSameBedrooms = 'Average Price Range: $'+  calculatedMinPriceOfHousesWithSameBedrooms +' - $' +calculatedMaxPriceOfHousesWithSameBedrooms; 
+          $scope.rangePriceOfHousesWithSameBedrooms = 'Price Range: $'+  calculatedMinPriceOfHousesWithSameBedrooms +' - $' +calculatedMaxPriceOfHousesWithSameBedrooms; 
           $scope.medianSqftOfHousesWithSameBedrooms = calculatedMedianSqftOfHousesWithSameBedrooms + ' Square Feet'; 
           
 
