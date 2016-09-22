@@ -28,19 +28,32 @@
   <body ng-app="rentalSystem">
     <div ng-controller = "mainController">
       <div class="container-fluid">
-        <h1 class = "title">Rental Pricing System</h1>
-        <p class ="description">Calculate how much you should charge for rent</p>
+        <h1 class = "title text-center">Rental Pricing System</h1>
+        <p class ="description text-center">Calculate how much you should charge for rent</p>
+        <p class ="warning text-center"><b>Note: Please enter numbers only</b></p>
        
-        <form ng-submit= "calculateRent()">
-          <input type="text" name="numBedrooms" placeholder="Number of Bedrooms" required ng-model = "numBedrooms">
-          <input type="text" name="numBathrooms" placeholder="Number of Bathrooms" required ng-model= "numBathrooms">
-          <input type="text" name="sqft" placeholder="Square Footage" required ng-model="sqft">
+        <form ng-submit= "calculateRent()" class='text-center'>
+          <input class = 'text-center' type="text" name="numBedrooms" placeholder="Number of Bedrooms" required ng-model = "numBedrooms">
+          <input class = 'text-center' type="text" name="numBathrooms" placeholder="Number of Bathrooms" required ng-model= "numBathrooms">
+          <input class = 'text-center' type="text" name="sqft" placeholder="Square Footage" required ng-model="sqft">
  
           <button type = "submit" class="btn btn-primary">Calculate Rent</button>
         </form>  
  
-        <h3><span ng-bind = "rentalCost">{{ rentalCost }}</span> <span ng-bind = "newNumBedrooms">{{ newNumBedrooms }}</span></h3>
-        <h3>The average price of </h3>
+        <h3 class = 'text-center'><span ng-bind = "rentalCost">{{ rentalCost }}</span> 
+        <span ng-bind="newSqft">{{newSqft}}</span>
+        <span ng-bind = "newNumBedrooms">{{ newNumBedrooms }}</span><span ng-bind="newNumBathrooms">{{newNumBathrooms}}</span></h3>
+
+        <h4 class = "comparison text-center"><span ng-bind="comparison">{{comparison}}</span><br/></h4>
+        <h5 class = "stats text-center">
+          <span ng-bind="medianSqftOfHousesWithSameBedrooms">{{medianSqftOfHousesWithSameBedrooms}}</span>
+          <br/>
+          <span ng-bind="medianPriceOfHousesWithSameBedrooms">{{medianPriceOfHousesWithSameBedroom}}</span>
+          <br/>
+          <span ng-bind="averagePriceOfHousesWithSameBedrooms">{{averagePriceOfHousesWithSameBedrooms}}</span>
+          <br/>
+          <span ng-bind="rangePriceOfHousesWithSameBedrooms">{{rangePriceOfHousesWithSameBedrooms}}</span>
+        </h5>
 
       </div>
     </div>
@@ -63,26 +76,35 @@
         response.success(function(dataFromServer){
           //parse dataFromServer into different scope variables 
           var variableArray = dataFromServer.split(','); 
-
-          var calculatedRentalCost = 'You should charge $'+parseFloat(variableArray[0]).toFixed(2)+ ' for rent'; 
-          var calculatedNumBedrooms = 'in your '+ variableArray[1]+ ' bedroom and '; 
-          var calculatedNumBathrooms = variableArray[2]; 
-          var calculatedSqft = variableArray[3]; 
-          var calculatedMedianPriceOfHousesWithSameBedrooms = parseFloat(variableArray[4]).toFixed(2); 
-          var calculatedAveragePriceOfHousesWithSameBedrooms = parseFloat(variableArray[5]).toFixed(2); 
+ 
+          var calculatedRentalCost = 'You should charge $'+parseFloat(variableArray[0]).toFixed(2)+ ' for rent in your '; 
+          var calculatedNumBedrooms = variableArray[1]+ 'Bed/'; 
+          var calculatedNumBathrooms = variableArray[2] + 'Bath house'; 
+          var calculatedSqft = variableArray[3] +' sqft ';
+          if(isNaN(parseFloat(variableArray[4]).toFixed(2)) == true){
+            var calculatedMedianPriceOfHousesWithSameBedrooms = 'Median Price: Not Available';
+          }else{
+            var calculatedMedianPriceOfHousesWithSameBedrooms = 'Median Price: $' + parseFloat(variableArray[4]).toFixed(2);
+          }
+          var calculatedAveragePriceOfHousesWithSameBedrooms = 'Average Price: $' + parseFloat(variableArray[5]).toFixed(2); 
           var calculatedMinPriceOfHousesWithSameBedrooms = variableArray[6]; 
           var calculatedMaxPriceOfHousesWithSameBedrooms = variableArray[7]; 
-          var calculatedMedianSqftOfHousesWithSameBedrooms = variableArray[8]; 
-
+          var calculatedMedianSqftOfHousesWithSameBedrooms = 'Median Size: ' + variableArray[8]; 
+          
+          $scope.numBedrooms = '';
+          $scope.numBathrooms = ''; 
+          $scope.sqft = '';
           $scope.rentalCost = calculatedRentalCost;
           $scope.newNumBedrooms = calculatedNumBedrooms; 
-          $scope.newNumBathrooms = calculatedNumBathrooms; 
+          $scope.newNumBathrooms = calculatedNumBathrooms;             
           $scope.newSqft = calculatedSqft; 
-          $scope.medianPriceOfHousesWithSameBedrooms = calculatedMedianPriceOfHousesWithSameBedrooms; 
+          $scope.comparison = "In comparison to similar houses: "
+          $scope.medianPriceOfHousesWithSameBedrooms = calculatedMedianPriceOfHousesWithSameBedrooms;
+           
           $scope.averagePriceOfHousesWithSameBedrooms = calculatedAveragePriceOfHousesWithSameBedrooms; 
-          $scope.minPriceOfHousesWithSameBedrooms = calculatedMinPriceOfHousesWithSameBedrooms; 
-          $scope.maxPriceofHousesWithSameBedrooms = calculatedMaxPriceOfHousesWithSameBedrooms; 
-          $scope.medianSqftOfHousesWithSameBedrooms = calculatedMedianSqftOfHousesWithSameBedrooms; 
+          $scope.rangePriceOfHousesWithSameBedrooms = 'Average Price Range: $'+  calculatedMinPriceOfHousesWithSameBedrooms +' - $' +calculatedMaxPriceOfHousesWithSameBedrooms; 
+          $scope.medianSqftOfHousesWithSameBedrooms = calculatedMedianSqftOfHousesWithSameBedrooms + ' Square Feet'; 
+          
 
           console.log('success');
         });

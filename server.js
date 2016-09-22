@@ -326,7 +326,7 @@ function calculatePricePerSqft(numBedrooms, sqft, numBathrooms){
 		rentalCost = medianPricePerSqftMore * parseInt(sqft);
 
 		rentalCost = rentalCost + ','+numBedrooms+','+numBathrooms+','+ sqft+ ',' + medianPriceByRoomSizeMore+','
-		+meanPriceByRoomSizeMore+','+minPriceByRoomSizeMore+','+maxPriceByRoomSizemore+ ',' +medianSqftByRoomSizeMore;
+		+meanPriceByRoomSizeMore+','+minPriceByRoomSizeMore+','+maxPriceByRoomSizeMore+ ',' +medianSqftByRoomSizeMore;
 	}
 }
 
