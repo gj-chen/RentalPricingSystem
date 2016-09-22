@@ -31,13 +31,12 @@
       $scope.calculateRent() = function(item, event){
         console.log('submitting form....');
         var dataObject = {
-          houseName: $scope.houseName,
           numBedrooms: $scope.numBedrooms, 
           numBathrooms: $scope.numBathrooms, 
           sqft: $scope.sqft; 
         }; 
 
-        var response = $http.get("/getVariablesAndCalculate", dataObject, {}); 
+        var response = $http.post("/getVariablesAndCalculate", dataObject, {}); 
         response.success(function(dataFromServer){
           $scope.rentalCost = dataFromServer; 
           console.log('success');
@@ -56,19 +55,18 @@
       <h1 class = "title text-center">Rental Pricing System</h1>
       <p class ="description text-center">Calculate how much you should charge for rent</p>
       
-      <form>
-        <input type="text" name="houseName" placeholder="House Name" required ng-model ="houseName">
+      <form method = "POST" action ="/getVariablesAndCalculate">
         <input type="text" name="numBedrooms" placeholder="Number of Bedrooms" required ng-model = "numBedrooms">
         <input type="text" name="numBathrooms" placeholder="Number of Bathrooms" required ng-model= "numBathrooms">
         <input type="text" name="sqft" placeholder="Square Footage" required ng-model="sqft">
 
-        <button class="btn btn-primary" ng-click="calculateRent()">Calculate Rent</button>
+        <button type = "submit" class="btn btn-primary" ng-submit= "calculateRent()">Calculate Rent</button>
       </form>  
 
    
     </div>
 
-    <h3 ng-bind="rentalCost">The calculated rent price is: {{ rentalCost }} {{houseName}}</h3> 
+    <h3 ng-bind="rentalCost">The calculated rent price is: {{ rentalCost }}</h3> 
  
   </body>
 </html>

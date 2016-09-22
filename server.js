@@ -168,10 +168,9 @@ router.get('/', function(req, res, next){
 });
 
 //pass in variables 
-router.get('/getVariablesAndCalculate', function(req, res, next){ 
+router.post('/getVariablesAndCalculate', function(req, res, next){ 
 	console.log('here?');
 	
-	var houseName = JSON.parse(req.param('houseName'));
 	var numBedrooms = JSON.parse(req.param('numBedrooms'));
 	var numBathrooms = JSON.parse(req.param('numBathrooms')); 
 	var sqft = JSON.parse(req.param('sqft')); 
@@ -185,6 +184,6 @@ router.get('/getVariablesAndCalculate', function(req, res, next){
 
 
 //app.get 
-app.get('*', router);
-//app.get('/getVariablesAndCalculate', router); 
+app.get('/', router);
+app.post('/getVariablesAndCalculate', router); 
 
