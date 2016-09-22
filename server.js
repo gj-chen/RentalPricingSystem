@@ -46,6 +46,15 @@ var priceByRoomSizeArray4 = [];
 var priceByRoomSizeArray5 = []; 
 var priceByRoomSizeArrayMore = []; 
 
+//array for sqft of houses by bedroom size 
+var sqftByRoomSizeArray0 = [];
+var sqftByRoomSizeArray1 = [];
+var sqftByRoomSizeArray2 = [];
+var sqftByRoomSizeArray3 = [];
+var sqftByRoomSizeArray4 = [];
+var sqftByRoomSizeArray5 = []; 
+var sqftByRoomSizeArrayMore = [];
+
 function checkRoomSizeAndCalculate(price, numBedrooms, numBathrooms, sqft){
 	var pricePerSqft = 0; 
 	if(numBedrooms == 0){
@@ -54,39 +63,46 @@ function checkRoomSizeAndCalculate(price, numBedrooms, numBathrooms, sqft){
 		pricePerSqft = (price / sqft); 
 		pricePerSqftArray0.push(pricePerSqft);
 		
-		priceByRoomSizeArray0.push(price); 
+		priceByRoomSizeArray0.push(price);
+		sqftByRoomSizeArray0.push(sqft);  
 	}else if(numBedrooms == 1){
 		//house has 1 bedroom, any number of bathrooms
 		pricePerSqft = (price / sqft); 
 		pricePerSqftArray1.push(pricePerSqft);
 
 		priceByRoomSizeArray1.push(price);
+		sqftByRoomSizeArray1.push(sqft);
 	}else if(numBedrooms == 2){
 		pricePerSqft = (price / sqft); 
 		pricePerSqftArray2.push(pricePerSqft);
 
 		priceByRoomSizeArray2.push(price);
+		sqftByRoomSizeArray2.push(sqft);
 	}else if(numBedrooms == 3){
 		pricePerSqft = (price / sqft); 
 		pricePerSqftArray3.push(pricePerSqft);
 
 		priceByRoomSizeArray3.push(price);
+		sqftByRoomSizeArray3.push(sqft);
 	}else if(numBedrooms == 4){
 		pricePerSqft = (price / sqft); 
 		pricePerSqftArray4.push(pricePerSqft);
 
 		priceByRoomSizeArray4.push(price);
+		sqftByRoomSizeArray4.push(sqft);
 	}else if(numBedrooms == 5){
 		pricePerSqft = (price / sqft); 
 		pricePerSqftArray5.push(pricePerSqft);
 
 		priceByRoomSizeArray5.push(price);
+		sqftByRoomSizeArray5.push(sqft);
 	}else{
 		//anything bigger than 5 rooms
 		pricePerSqft = (price / sqft); 
 		pricePerSqftArrayMore.push(pricePerSqft); 
 
 		priceByRoomSizeArrayMore.push(price);
+		sqftByRoomSizeArrayMore.push(sqft);
 	}
 }
 
@@ -168,6 +184,15 @@ var maxPriceByRoomSize4 = 0;
 var maxPriceByRoomSize5 = 0;
 var maxPriceByRoomSizeMore = 0;
 
+var medianSqftByRoomSize0 = 0;
+var medianSqftByRoomSize1 = 0;
+var medianSqftByRoomSize2 = 0; 
+var medianSqftByRoomSize3 = 0;
+var medianSqftByRoomSize4 = 0;
+var medianSqftByRoomSize5 = 0;
+var medianSqftByRoomSizeMore = 0;
+
+
 function sortAndGetMedianMeanMinMax(){
 	//so far we have all of the roomsizes and price per sqfts 
 	//need to get the median of each to use as the standard 
@@ -204,9 +229,8 @@ function sortAndGetMedianMeanMinMax(){
 	priceByRoomSizeArray2.sort(function(a, b){return a-b}); 
 	priceByRoomSizeArray3.sort(function(a, b){return a-b}); 
 	priceByRoomSizeArray4.sort(function(a, b){return a-b}); 
-	priceByRoomSizeArray5.sort(); 
-	console.log("price by room size" + priceByRoomSizeArray5);
-	priceByRoomSizeArrayMore.sort(); 
+	priceByRoomSizeArray5.sort(function(a, b){return a-b}); 
+	priceByRoomSizeArrayMore.sort(function(a, b){return a-b}); 
 
 	medianPriceByRoomSize0 = median(priceByRoomSizeArray0); 
 	medianPriceByRoomSize1 = median(priceByRoomSizeArray1);
@@ -225,7 +249,6 @@ function sortAndGetMedianMeanMinMax(){
 	meanPriceByRoomSize5 = mean(priceByRoomSizeArray5);
 	meanPriceByRoomSizeMore = mean(priceByRoomSizeArrayMore);
 
-	console.log(priceByRoomSizeArray5); 
 	minPriceByRoomSize0 = priceByRoomSizeArray0[0]; 
 	minPriceByRoomSize1 = priceByRoomSizeArray1[0];
 	minPriceByRoomSize2 = priceByRoomSizeArray2[0];
@@ -242,9 +265,26 @@ function sortAndGetMedianMeanMinMax(){
 	maxPriceByRoomSize5 = priceByRoomSizeArray5[priceByRoomSizeArray5.length - 1];
 	maxPriceByRoomSizeMore = priceByRoomSizeArrayMore[priceByRoomSizeArrayMore.length - 1];
 
+	//median sqft of house with #bed/bath 
+	//sort first 
 
-	console.log("max" + maxPriceByRoomSize5);
-	console.log("min" + minPriceByRoomSize5); 
+	sqftByRoomSizeArray0.sort(function(a, b){return a-b});
+	sqftByRoomSizeArray1.sort(function(a, b){return a-b});
+	sqftByRoomSizeArray2.sort(function(a, b){return a-b});
+	sqftByRoomSizeArray3.sort(function(a, b){return a-b});
+	sqftByRoomSizeArray4.sort(function(a, b){return a-b});
+	sqftByRoomSizeArray5.sort(function(a, b){return a-b});
+	sqftByRoomSizeArrayMore.sort(function(a, b){return a-b});
+	//get medians 
+	medianSqftByRoomSize0 = median(sqftByRoomSizeArray0);
+	console.log(medianPricePerSqft0);
+	medianSqftByRoomSize1 = median(sqftByRoomSizeArray1);
+	medianSqftByRoomSize2 = median(sqftByRoomSizeArray2);
+	medianSqftByRoomSize3 = median(sqftByRoomSizeArray3);
+	medianSqftByRoomSize4 = median(sqftByRoomSizeArray4);
+	medianSqftByRoomSize5 = median(sqftByRoomSizeArray5);
+	medianSqftByRoomSizeMore = median(sqftByRoomSizeArrayMore);
+
 }
 
 parseCSV(); 
@@ -252,23 +292,45 @@ sortAndGetMedianMeanMinMax();
 
 
 var rentalCost = 0; 
-function calculatePricePerSqft(numBedrooms, sqft){
+function calculatePricePerSqft(numBedrooms, sqft, numBathrooms){
 	if(numBedrooms == 0){
 		//calculate total cost = price_per_sqft * sqft of house 
 		rentalCost = medianPricePerSqft0 * parseInt(sqft); 
+
+		//will append other values here and parse on front end after by commas 
+		rentalCost = rentalCost + ','+numBedrooms+','+numBathrooms+','+ sqft+ ',' + medianPriceByRoomSize0+','
+		+meanPriceByRoomSize0+','+minPriceByRoomSize0+','+maxPriceByRoomSize0 + ',' +medianSqftByRoomSize0;
 	}else if(numBedrooms == 1){
 		rentalCost = medianPricePerSqft1 * parseInt(sqft);
+
+		rentalCost = rentalCost + ','+numBedrooms+','+numBathrooms+','+ sqft+ ','+medianPriceByRoomSize1+','
+		+meanPriceByRoomSize1+','+minPriceByRoomSize1+','+maxPriceByRoomSize1+ ',' +medianSqftByRoomSize1;
 	}else if(numBedrooms == 2){
 		rentalCost = medianPricePerSqft2 * parseInt(sqft);
+
+		rentalCost = rentalCost + ','+numBedrooms+','+numBathrooms+','+ sqft+ ','+medianPriceByRoomSize2+','
+		+meanPriceByRoomSize2+','+minPriceByRoomSize2+','+maxPriceByRoomSize2+ ',' +medianSqftByRoomSize2;
 	}else if(numBedrooms == 3){
 		rentalCost = medianPricePerSqft3 * parseInt(sqft);
+
+		rentalCost = rentalCost + ','+numBedrooms+','+numBathrooms+','+sqft+ ',' + medianPriceByRoomSize3+','
+		+meanPriceByRoomSize3+','+minPriceByRoomSize3+','+maxPriceByRoomSize3+ ',' +medianSqftByRoomSize3;
 	}else if(numBedrooms == 4){
 		rentalCost = medianPricePerSqft4 * parseInt(sqft);
+
+		rentalCost = rentalCost + ','+numBedrooms+','+numBathrooms+','+ sqft+ ',' + medianPriceByRoomSize4+','
+		+meanPriceByRoomSize4+','+minPriceByRoomSize4+','+maxPriceByRoomSize4+ ',' +medianSqftByRoomSize4;
 	}else if(numBedrooms == 5){
 		rentalCost = medianPricePerSqft5 * parseInt(sqft);
+
+		rentalCost = rentalCost + ','+numBedrooms+','+numBathrooms+','+ sqft+ ',' + medianPriceByRoomSize5+','
+		+meanPriceByRoomSize5+','+minPriceByRoomSize5+','+maxPriceByRoomSize5+ ',' +medianSqftByRoomSize5;
 	}else{
 		//more than 5 bedrooms 
 		rentalCost = medianPricePerSqftMore * parseInt(sqft);
+
+		rentalCost = rentalCost + ','+numBedrooms+','+numBathrooms+','+ sqft+ ',' + medianPriceByRoomSizeMore+','
+		+meanPriceByRoomSizeMore+','+minPriceByRoomSizeMore+','+maxPriceByRoomSizemore+ ',' +medianSqftByRoomSizeMore;
 	}
 }
 
@@ -281,16 +343,14 @@ router.get('/', function(req, res, next){
 
 //pass in variables 
 router.post('/getVariablesAndCalculate', function(req, res, next){ 
-	console.log('here?');
-	
 	var numBedrooms = JSON.parse(req.param('numBedrooms'));
 	var numBathrooms = JSON.parse(req.param('numBathrooms')); 
 	var sqft = JSON.parse(req.param('sqft')); 
 	
 	//check what the bedroom size is to determine price per sqft 
-	calculatePricePerSqft(numBedrooms, sqft); 
+	calculatePricePerSqft(numBedrooms, sqft, numBathrooms); 
 	//rental cost is now calculated 
-	console.log(rentalCost); 
+	console.log(rentalCost);
 	res.json(rentalCost);
 }); 
 
