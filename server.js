@@ -170,10 +170,11 @@ router.get('/', function(req, res, next){
 //pass in variables 
 router.get('/getVariablesAndCalculate', function(req, res, next){
 	console.log('here?');
-	var houseName = JSON.parse(req.param('houseName'));
-	var numBedrooms = JSON.parse(req.param('numBedrooms'));
-	var numBathrooms = JSON.parse(req.param('numBathrooms')); 
-	var sqft = JSON.parse(req.param('sqft')); 
+	
+	//var houseName = JSON.parse(req.param('houseName'));
+	//var numBedrooms = JSON.parse(req.param('numBedrooms'));
+	//var numBathrooms = JSON.parse(req.param('numBathrooms')); 
+	//var sqft = JSON.parse(req.param('sqft')); 
 	
 	//check what the bedroom size is to determine price per sqft 
 	calculatePricePerSqft(numBedrooms, sqft); 

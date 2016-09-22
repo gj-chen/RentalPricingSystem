@@ -1,4 +1,5 @@
 var rentalSystem = angular.module("rentalSystem", []); 
+angular.controller('mainController', mainController);
 
 function mainController($scope, $http){ 
 	$scope.houseName = ''; 
@@ -19,4 +20,3 @@ function mainController($scope, $http){
 	};	
 }
 
-rentalSystem.controller('mainController', mainController);
