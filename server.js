@@ -265,8 +265,6 @@ function sortAndGetMedianMeanMinMax(){
 	maxPriceByRoomSize5 = priceByRoomSizeArray5[priceByRoomSizeArray5.length - 1];
 	maxPriceByRoomSizeMore = priceByRoomSizeArrayMore[priceByRoomSizeArrayMore.length - 1];
 
-	//median sqft of house with #bed/bath 
-	//sort first 
 
 	sqftByRoomSizeArray0.sort(function(a, b){return a-b});
 	sqftByRoomSizeArray1.sort(function(a, b){return a-b});
@@ -277,7 +275,6 @@ function sortAndGetMedianMeanMinMax(){
 	sqftByRoomSizeArrayMore.sort(function(a, b){return a-b});
 	//get medians 
 	medianSqftByRoomSize0 = median(sqftByRoomSizeArray0);
-	console.log(medianPricePerSqft0);
 	medianSqftByRoomSize1 = median(sqftByRoomSizeArray1);
 	medianSqftByRoomSize2 = median(sqftByRoomSizeArray2);
 	medianSqftByRoomSize3 = median(sqftByRoomSizeArray3);
@@ -289,7 +286,6 @@ function sortAndGetMedianMeanMinMax(){
 
 parseCSV(); 
 sortAndGetMedianMeanMinMax();
-
 
 var rentalCost = 0; 
 function calculatePricePerSqft(numBedrooms, sqft, numBathrooms){

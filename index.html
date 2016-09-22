@@ -28,8 +28,8 @@
   <body ng-app="rentalSystem">
     <div ng-controller = "mainController">
       <div class="container-fluid">
-        <h1 class = "title text-center">Rental Pricing System</h1>
-        <p class ="description text-center">Calculate how much you should charge for rent</p>
+        <h1 class = "title">Rental Pricing System</h1>
+        <p class ="description">Calculate how much you should charge for rent</p>
        
         <form ng-submit= "calculateRent()">
           <input type="text" name="numBedrooms" placeholder="Number of Bedrooms" required ng-model = "numBedrooms">
@@ -39,11 +39,10 @@
           <button type = "submit" class="btn btn-primary">Calculate Rent</button>
         </form>  
  
-     
+        <h3><span ng-bind = "rentalCost">{{ rentalCost }}</span> <span ng-bind = "newNumBedrooms">{{ newNumBedrooms }}</span></h3>
+        <h3>The average price of </h3>
+
       </div>
- 
-      <h3>The calculated rent price is: $<span ng-bind = "rentalCost">{{ rentalCost }}</span></h3>
-      <h3>The average price of </h3>
     </div>
 
     <script>
@@ -62,7 +61,29 @@
  
         var response = $http.post("/getVariablesAndCalculate", dataObject, {});
         response.success(function(dataFromServer){
-          $scope.rentalCost = dataFromServer;
+          //parse dataFromServer into different scope variables 
+          var variableArray = dataFromServer.split(','); 
+
+          var calculatedRentalCost = 'You should charge $'+parseFloat(variableArray[0]).toFixed(2)+ ' for rent'; 
+          var calculatedNumBedrooms = 'in your '+ variableArray[1]+ ' bedroom and '; 
+          var calculatedNumBathrooms = variableArray[2]; 
+          var calculatedSqft = variableArray[3]; 
+          var calculatedMedianPriceOfHousesWithSameBedrooms = parseFloat(variableArray[4]).toFixed(2); 
+          var calculatedAveragePriceOfHousesWithSameBedrooms = parseFloat(variableArray[5]).toFixed(2); 
+          var calculatedMinPriceOfHousesWithSameBedrooms = variableArray[6]; 
+          var calculatedMaxPriceOfHousesWithSameBedrooms = variableArray[7]; 
+          var calculatedMedianSqftOfHousesWithSameBedrooms = variableArray[8]; 
+
+          $scope.rentalCost = calculatedRentalCost;
+          $scope.newNumBedrooms = calculatedNumBedrooms; 
+          $scope.newNumBathrooms = calculatedNumBathrooms; 
+          $scope.newSqft = calculatedSqft; 
+          $scope.medianPriceOfHousesWithSameBedrooms = calculatedMedianPriceOfHousesWithSameBedrooms; 
+          $scope.averagePriceOfHousesWithSameBedrooms = calculatedAveragePriceOfHousesWithSameBedrooms; 
+          $scope.minPriceOfHousesWithSameBedrooms = calculatedMinPriceOfHousesWithSameBedrooms; 
+          $scope.maxPriceofHousesWithSameBedrooms = calculatedMaxPriceOfHousesWithSameBedrooms; 
+          $scope.medianSqftOfHousesWithSameBedrooms = calculatedMedianSqftOfHousesWithSameBedrooms; 
+
           console.log('success');
         });
         response.error(function(dataFromServer){
