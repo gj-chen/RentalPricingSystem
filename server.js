@@ -10,7 +10,12 @@ var express = require('express');
 
 
 //Create an Express application 
-var app = express(); 
+var app = express();
+
+//Uses bodyParser to support JSON encoded bodies 
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 //Express router 
 var router = express.Router(); 
 
@@ -22,11 +27,6 @@ router.use(function(req, res, next){
 	console.log(req.method, req.url); 
 	next(); 
 });
-
-//Uses bodyParser to support JSON encoded bodies 
-app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
 
 //Calculations
 var pricePerSqftArray0 = []; 
@@ -168,7 +168,8 @@ router.get('/', function(req, res, next){
 });
 
 //pass in variables 
-router.post('/getVariablesAndCalculate', function(req, res, next){
+router.get('/getVariablesAndCalculate', function(req, res, next){
+	console.log('here?');
 	var houseName = JSON.parse(req.param('houseName'));
 	var numBedrooms = JSON.parse(req.param('numBedrooms'));
 	var numBathrooms = JSON.parse(req.param('numBathrooms')); 
@@ -178,14 +179,11 @@ router.post('/getVariablesAndCalculate', function(req, res, next){
 	calculatePricePerSqft(numBedrooms, sqft); 
 	//rental cost is now calculated 
 	console.log(rentalCost); 
-
-	//res.json(rentalCost);
-	
+	res.json(rentalCost);
 }); 
 
 
 //app.get 
 app.get('/', router);
-app.post('/getVariablesAndCalculate', router); 
 app.get('/getVariablesAndCalculate', router); 
-//app.get('/getVariablesAndCalculate', router);
+

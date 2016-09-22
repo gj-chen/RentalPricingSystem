@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="rentalSystem">
-  <head>
+<html lang="en">
+  <head ng-app="rentalSystem">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,21 +19,26 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="/core.js"></script>
+
   </head>
   
-
+  <body ng-controller = "mainController">
     <div class="container-fluid">
       <h1 class = "title text-center">Rental Pricing System</h1>
       <p class ="description text-center">Calculate how much you should charge for rent</p>
     
-      <form id = 'sendVariables' action = "/getVariablesAndCalculate" method ="POST">
-        <input type="text" name="houseName" placeholder="House Name" required>
-        <input type="text" name="numBedrooms" placeholder="Number of Bedrooms" required>
-        <input type="text" name="numBathrooms" placeholder="Number of Bathrooms" required>
-        <input type="text" name="sqft" placeholder="Square Footage" required>
-        <button class="btn btn-primary" id ="button" type="submit">Calculate Rent</button>
+      <form id = 'sendVariables'>
+        <input type="text" name="houseName" placeholder="House Name" required ng-model = "houseName">
+        <input type="text" name="numBedrooms" placeholder="Number of Bedrooms" required ng-model = "numBedrooms">
+        <input type="text" name="numBathrooms" placeholder="Number of Bathrooms" required ng-model= "numBathrooms">
+        <input type="text" name="sqft" placeholder="Square Footage" required ng-model="sqft">
+        <button class="btn btn-primary" id ="button" type="submit" ng-click="getCall()">Calculate Rent</button>
       </form>
     </div>
+
+    <h3>The calculated rent price is: {{ rentalCost }} {{houseName}}</h3> 
  
   </body>
 </html>

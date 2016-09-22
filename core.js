@@ -1,35 +1,22 @@
-var rentalSystem = angular.module('rentalSystem', []); 
+var rentalSystem = angular.module("rentalSystem", []); 
 
-function mainController($scope, $http){
-	$scope.formHouseName; 
-	$scope.formNumBedrooms; 
-	$scope.formNumBathrooms; 
-	$scope.formSqft; 
+function mainController($scope, $http){ 
+	$scope.houseName = ''; 
+	$scope.numBedrooms = '';
+	$scope.numBathrooms = ''; 
+	$scope.sqft = '';  	
 
-	//landing on page - get rental computation and show computation 
-	$http.get('/getVariablesAndCalculate')
-		.success(function(data){
+	$scope.getCall = function(){
+		$http({
+			method: 'GET',
+			url: '/getVariablesAndCalculate'
+		}).then(function successCallBack(data){
 			$scope.rentalCost = data;
 			console.log('the rental cost is: ' + data); 
-		})
-		.error(function(data){
-			console.log('An error has occurred during GET'); 
-		}); 
-
-	$scope.calculateRentalCost = function(){
-		console.log('into here');
-		$http.post('/getVariablesAndCalculate')
-			.success(function(data){
-				$scope.formHouseName = ''; 
-				$scope.formNumBedrooms = ''; 
-				$scope.formNumBathrooms = ''; 
-				$scope.formSqft = '';
-				
-				$scope.rentalCost = data; 
-				console.log(data); 
-			})
-			.error(function(data){
-				console.log('An error has occurred during POST'); 	
-			}); 
-	}
+		}, function errorCallBack(data){
+			console.log('An error has occurred during return'); 
+		});
+	};	
 }
+
+rentalSystem.controller('mainController', mainController);
